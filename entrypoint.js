@@ -1,19 +1,22 @@
-import { serve } from "https://deno.land/std/http/server.ts";
+import { Application } from "https://deno.land/x/oak/mod.ts";
+import { oakCors as _oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
+import { Router } from "https://deno.land/x/oak/mod.ts";
+import { staticFiles } from "https://deno.land/x/static_files/mod.ts";
 
-const port = 8080;
-console.log(`AcAdmin server is running on port ${port}`);
+const app = new Application();
+const router = new Router();
+export const staticFiles = staticFiles;
+// Serve static files from the "nui" directory
+app.use(staticFiles("./nui"));
 
-serve((req) => {
-    const url = new URL(req.url);
-    if (url.pathname === "/api/stats") {
-        // Example endpoint to get server stats
-        return new Response(JSON.stringify({
-            playersOnline: 10, 
-            maxPlayers: 32
-        }), {
-            headers: { "Content-Type": "application/json" },
-        });
-    } else {
-        return new Response("Not Found", { status: 404 });
-    }
-}, { port });
+// Example route to serve the panel at "/"
+router.get("/", async (context) => {
+  context.response.body = await Deno.readTextFile('./nui/index.html');
+});
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+// Start the server
+console.log("Server running on http://localhost:8090");
+await app.listen({ port: 8090 });

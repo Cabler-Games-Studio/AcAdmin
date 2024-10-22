@@ -16,4 +16,4 @@ app.use((ctx) => {
     ctx.response.body = { message: "Admin Panel API", status: "active" };
 });
 
-await app.listen({ port: 8000 });
+await app.listen({ port: 8090 });
