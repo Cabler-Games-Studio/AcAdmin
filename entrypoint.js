@@ -1,13 +1,19 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
-import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
+import { oakCors as _oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import { serveStatic } from "https://deno.land/x/oak_static/mod.ts"; // Correct import for static files
+import { send } from "https://deno.land/x/oak@v7.7.0/mod.ts"; // Correct import for static files
 
 const app = new Application();
 const router = new Router();
 
 // Serve static files from the "nui" directory
-app.use(serveStatic("nui", { index: "index.html" }));
+app.use(async (context, next) => {
+  await send(context, context.request.url.pathname, {
+    root: `${Deno.cwd()}/nui`,
+    index: "index.html",
+  });
+  await next();
+});
 
 // Example route to serve the panel at "/"
 router.get("/", async (context) => {
