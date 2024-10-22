@@ -1,0 +1,8 @@
+/* Custom styles using Tailwind’s base classes */
+body {
+    @apply bg-gray-900 text-white;
+}
+
+#dashboard {
+    @apply p-4 bg-gray-800 rounded-lg shadow-lg;
+}

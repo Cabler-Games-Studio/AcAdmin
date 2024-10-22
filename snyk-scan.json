@@ -1,0 +1,12 @@
+{
+    "version": "1.0.0",
+    "dependencies": {
+      "oak": "latest",
+      "djwt": "latest",
+      "std": "latest"
+    },
+    "scripts": {
+      "test": "deno test"
+    }
+  }
+  
