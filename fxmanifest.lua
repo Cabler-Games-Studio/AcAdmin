@@ -1,24 +1,25 @@
 fx_version 'cerulean'
 game 'gta5'
 
+name 'AcAdmin'
+description 'Advanced Admin Panel for FiveM'
 author 'AcGaming14'
-description 'AcAdmin Panel for FiveM'
+version '1.0.0'
 
--- UI Assets
+-- Server-side scripts
+server_script 'entrypoint.js'
+
+-- NUI (client UI)
 ui_page 'nui/index.html'
 
 files {
     'nui/index.html',
     'nui/styles.css',
-    'nui/scripts.js'
+    'nui/script.js'
 }
 
-client_scripts {
-    'resource/client.lua'
-}
+-- Client-side scripts
+client_script 'resource/client.lua'
 
-server_scripts {
-    'panel/server.ts'  -- Pointing to Deno-based backend
-}
-
-shared_script 'resource/config.lua'
+-- Additional server-side scripts (if any)
+server_script 'resource/server.lua'
